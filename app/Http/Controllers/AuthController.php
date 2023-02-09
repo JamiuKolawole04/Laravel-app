@@ -9,4 +9,14 @@ class AuthController extends Controller
 {
     //
     use HttpResponses;
+
+    public function login() 
+    {
+        return "this is my login  route";
+    }
+
+     public function register() 
+    {
+        return "this is my regster  route";
+    }
 }
