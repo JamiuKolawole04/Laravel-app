@@ -15,8 +15,12 @@ class AuthController extends Controller
         return "this is my login  route";
     }
 
-     public function register() 
+    public function register() 
     {
         return response()->json("this is my register route");
     }
-}
+
+     public function logout() 
+    {
+        return response()->json("this is my logout route");
+    }}
