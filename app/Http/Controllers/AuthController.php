@@ -17,6 +17,6 @@ class AuthController extends Controller
 
      public function register() 
     {
-        return "this is my regster  route";
+        return response()->json("this is my register route");
     }
 }
