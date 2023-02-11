@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rule;
 
 class StoreUserRequest extends FormRequest
 {
@@ -13,7 +15,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -28,7 +30,7 @@ class StoreUserRequest extends FormRequest
             // name is required and must be string and should not be more than 255 characters
             "name" => ["required", "string", "max:255"],
             "email" => ["required", "string", "max:255", "unique:users"], // unique on users table
-            "password" => ["required", "confirmed", Rules/Password::defaults]
+            "password" => ["required", "confirmed", Rules\Password::defaults()]
         ];
     }
 }
