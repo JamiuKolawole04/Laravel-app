@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
+use App\Http\Requests\StoreUserRequest;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -15,9 +18,17 @@ class AuthController extends Controller
         return "this is my login  route";
     }
 
-    public function register() 
+    public function register(StoreUserRequest $request) 
     {
-        return response()->json("this is my register route");
+        $request->validated($request->all());
+
+        $user = User::create([
+            "name" =>  $request->name,
+            "email" => $request->email,
+            "password" => Hash::make($request->password)
+        ]);
+        // return response()->json("this is my register route");
+        return $this->success();
     }
 
      public function logout() 
