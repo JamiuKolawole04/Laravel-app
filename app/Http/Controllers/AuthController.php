@@ -5,16 +5,31 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use \App\Http\Requests\StoreUserRequest;
+use \App\Http\Requests\LoginUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     //
     use HttpResponses;
 
-    public function login() 
+    public function login(LoginUserRequest $request) 
     {
+        // $request-> validated($request->only('email', 'password'));
+
+        // checking validation for only email and password
+        // if (!Auth::attempt($request->only("email", "password"))) {
+        //     return $this->error("", "credentials do not match", 401);
+        // }
+
+        $request-> validated($request->all());
+        if (!Auth::attempt($request->only(["email", "password"]))) {
+            return $this->error("", "credentials do not match", 401);
+        }
+
+        
         return "this is my login  route";
     }
 
