@@ -24,13 +24,20 @@ class AuthController extends Controller
         //     return $this->error("", "credentials do not match", 401);
         // }
 
+        // checking validation for defined columns in the request class
         $request-> validated($request->all());
+        // checking for credentials in the db
         if (!Auth::attempt($request->only(["email", "password"]))) {
             return $this->error(null, "credentials do not match", 401);
         }
 
+        $user = User::where("email", $request->email)->first();
+
+        return $this->success([
+            "user" => $user,
+            "token" => $user->createToken("API tojen of" . $user->name)->plainTextToken
+        ]);
         
-        return "this is my login  route";
     }
 
     public function register(StoreUserRequest $request) 
