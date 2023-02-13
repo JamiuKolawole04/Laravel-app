@@ -32,7 +32,7 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(StoreTaskRequest $request)
+    public function store(StoreTaskRequest $request)
     {
         // validate incoming request body
          $request->validated($request->all());
@@ -43,7 +43,7 @@ class TasksController extends Controller
             "user_id" => Auth::user()->id,
             "name" => $request->name,
             "description" => $request->description,
-            "priority" => $this->priority
+            "priority" => $request->priority
         ]);
 
         return new TasksResource($task);
@@ -56,7 +56,7 @@ class TasksController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function create(Request $request)
     {
         //
     }
