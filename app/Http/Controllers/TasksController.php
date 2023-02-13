@@ -7,9 +7,16 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Task;
 use App\Http\Resources\TasksResource;
 use App\Http\Requests\StoreTaskRequest;
+use App\Models\User;
+use App\Traits\HttpResponses;
+
+
+
 
 class TasksController extends Controller
 {
+    use HttpResponses;
+
     /**
      * Display a listing of the resource.
      *
@@ -67,9 +74,13 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    // public function show($id)
+    public function show(Task $task)
     {
-        //
+        if (Auth::user()->id !== $task->user_id) {
+            return $this->error("", "You are not authorized to make this request", 403);
+        }
+        return new TasksResource($task);
     }
     /**
      * Show the form for editing the specified resource.
@@ -103,5 +114,12 @@ class TasksController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+     public function getASingleTask(Task $task)
+    {
+        //
+        // $task = Task::where("id", $id)->get();
+        return new TasksResource($task);
     }
 }
