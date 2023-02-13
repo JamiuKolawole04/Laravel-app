@@ -100,9 +100,15 @@ class TasksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Task $task)
     {
         //
+         if (Auth::user()->id !== $task->user_id) {
+            return $this->error("", "You are not authorized to make this request", 403);
+        }
+        $task->update($request->all());
+
+        return new TasksResource($task);
     }
 
     /**
