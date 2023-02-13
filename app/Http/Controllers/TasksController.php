@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Task;
+use App\Http\Resources\TasksResource;
 
 class TasksController extends Controller
 {
@@ -13,8 +16,14 @@ class TasksController extends Controller
      */
     public function index()
     {
-        //
-        return response()->json("Test protected route");
+        // return response()->json(Task::all());
+        // return Task::all();
+        // return TasksResource::collection(
+        //     Task::where("user_id", Auth::user()->id)->get()
+        // );
+         return TasksResource::collection(
+            Task::all()
+        );
     }
 
     /**
@@ -48,7 +57,6 @@ class TasksController extends Controller
     {
         //
     }
-
     /**
      * Show the form for editing the specified resource.
      *
