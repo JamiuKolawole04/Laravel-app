@@ -29,4 +29,5 @@ Route::post("register", [AuthController::class, "register"]);
 Route::group(["middleware" => ['auth:sanctum']], function() {
     Route::post("logout", [AuthController::class, "logout"]);
     Route::resource("tasks", TasksController::class);
+    Route::post("try", [TasksController::class, "create"]);
 });

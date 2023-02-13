@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Task;
 use App\Http\Resources\TasksResource;
+use App\Http\Requests\StoreTaskRequest;
 
 class TasksController extends Controller
 {
@@ -31,9 +32,22 @@ class TasksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(StoreTaskRequest $request)
     {
-        //
+        // validate incoming request body
+         $request->validated($request->all());
+
+
+
+        $task = Task::create([
+            "user_id" => Auth::user()->id,
+            "name" => $request->name,
+            "description" => $request->description,
+            "priority" => $this->priority
+        ]);
+
+        return new TasksResource($task);
+
     }
 
     /**
